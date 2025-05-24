@@ -1,5 +1,6 @@
 ---
 title: My Résumé
+description: With over 10 years of experience, I've contributed to teams at Crunchyroll, TradeStation, and others
 draft: false
 date: 2019-05-24T01:23:45-06:00
 images: ["images/resume/cover.jpg"]

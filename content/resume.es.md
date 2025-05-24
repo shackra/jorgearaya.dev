@@ -1,5 +1,6 @@
 ---
 title: Mi Curriculum Vitae
+description: Con más de 10 años de experiencia, he contribuido a equipos en Crunchyroll, TradeStation, entre otros
 draft: false
 date: 2019-05-24T01:23:45-06:00
 images: ["images/resume/cover.es.jpg"]
