@@ -56,7 +56,7 @@ MySQL, GraphQL (backend), ReactJS & Tailwind CSS
 
 ### PROJECTS
 
-See [my portfolio](/portfolio)
+See [my portfolio](/en/portfolio)
 
 ### TECHNICAL SKILLS
 
