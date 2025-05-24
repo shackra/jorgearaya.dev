@@ -1,6 +1,6 @@
 baseURL = 'https://jorgearaya.dev/'
 languageCode = 'en'
-title = 'Jorge Araya | Freelance Remote Software Engineer'
+title = 'Jorge Araya | Freelance Software Engineer'
 theme = 'coder'
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = true
@@ -47,6 +47,9 @@ style = "paraiso-dark"
   tag = "tags"
   author = "authors"
 
+[languages.en]
+languageName = ":us:"
+
 # Social links
 [[params.social]]
   name = "Github"
@@ -74,19 +77,47 @@ style = "paraiso-dark"
   target="_blank"
 
 # Menu links
-[[menu.main]]
+[[languages.en.menu.main]]
   name = "Résumé"
   weight = 1
   url = "resume/"
-[[menu.main]]
+[[languages.en.menu.main]]
   name = "Blog"
   weight = 2
   url  = "blog/"
-[[menu.main]]
+[[languages.en.menu.main]]
   name = "Portfolio"
   weight = 3
   url = "portfolio/"
-[[menu.main]]
+[[languages.en.menu.main]]
   name = "Contact"
+  weight = 4
+  url = "https://cal.com/jorgean/30min"
+
+# Español
+[languages.es]
+languageName = "🇨🇷"
+title = "Jorge Araya | Ingeniero de software freelace"
+
+[languages.es.params]
+author = "Jorge Araya"
+info = "Desarrollo sistemas backend escalables y APIs con Go y Python"
+description = "Mi sitio web personal"
+keywords = "blog,desarrollador,personal,freelancer,ingeniero de software"
+
+[[languages.es.menu.main]]
+  name = "CV"
+  weight = 1
+  url = "resume/"
+[[languages.es.menu.main]]
+  name = "Bitácora"
+  weight = 2
+  url  = "blog/"
+[[languages.es.menu.main]]
+  name = "Portafolio"
+  weight = 3
+  url = "portfolio/"
+[[languages.es.menu.main]]
+  name = "Contacto"
   weight = 4
   url = "https://cal.com/jorgean/30min"
