@@ -81,12 +81,27 @@
       root = "/var/www/jorgearaya.dev";
 
       extraConfig = ''
-        error_page 404 /404.html;
         charset utf-8;
+        error_page 404 = @localized_404;
       '';
 
       locations."/" = {
         tryFiles = "$uri $uri/ =404";
+      };
+
+      # dynamic 404
+      locations."@localized_404" = {
+        extraConfig = ''
+          if ($uri ~ ^/en/) {
+            rewrite ^ /en/404.html break;
+          }
+          if ($uri ~ ^/es/) {
+            rewrite ^ /es/404.html break;
+          }
+
+          # fallback
+          rewrite ^ /en/404.html break;
+        '';
       };
     };
   };
