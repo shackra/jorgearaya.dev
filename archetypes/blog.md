@@ -5,7 +5,7 @@ date: {{ .Date }}
 title: ""
 slug: ""
 cascade:
-- url: :year-:yearday/:slug
+- url: :section/:year-:yearday/:slug
 description: ""
 authors: ["Jorge"]
 tags: []
