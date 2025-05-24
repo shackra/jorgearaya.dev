@@ -12,10 +12,11 @@ style = "paraiso-dark"
 
 [params]
   author = "Jorge Araya"
-  info = " I build scalable backend systems and APIs with Go & Python"
-  description = "Jorge Araya's personal website"
+  info = "I build scalable backend systems and APIs with Go & Python"
+  description = "My personal website"
   keywords = "blog,developer,personal,freelancer,software engineer"
   avatarurl = "images/me.jpg"
+  images = ["images/site cover.jpg"]
 
   faviconSVG = "images/favicon.svg"
   favicon_32 = "/img/favicon-32x32.png"
@@ -31,6 +32,11 @@ style = "paraiso-dark"
   # customCSS = ["css/custom.css"]
   # customSCSS = ["scss/custom.scss"]
   # customJS = ["js/custom.js"]
+[params.goatCounter]
+  code = "vekdddjcxj2dgzazsr"
+
+[[params.social]]
+  twitter = "elzorrorebelde"
 
 [taxonomies]
   category = "categories"
@@ -44,37 +50,40 @@ style = "paraiso-dark"
   icon = "fa-brands fa-github fa-2x"
   weight = 1
   url = "https://github.com/shackra/"
+  target = "_blank"
 [[params.social]]
   name = "Gitlab"
   icon = "fa-brands fa-gitlab fa-2x"
   weight = 2
   url = "https://gitlab.com/shackra/"
+  target = "_blank"
 [[params.social]]
   name = "𝕏"
   icon = "fa-brands fa-x-twitter fa-2x"
   weight = 3
   url = "https://x.com/elzorrorebelde/"
+  target = "_blank"
 [[params.social]]
   name = "Stack Overflow"
   icon = "fa-brands fa-stack-overflow fa-2x"
   weight = 4
   url = "https://stackoverflow.com/users/2020214/shackra"
-[[params.social]]
-  name = "Schedule a 30 minutes appointment"
-  icon = "fa-solid fa-phone fa-2x"
-  weight = 5
-  url = "https://cal.com/jorgean/30min"
+  target="_blank"
 
 # Menu links
-# [[menu.main]]
-#   name = "Résumé"
-#   weight = 1
-#   url = "resume/"
-# [[menu.main]]
-#   name = "Blog"
-#   weight = 2
-#   url  = "blog/"
-# [[menu.main]]
-#   name = "Portfolio"
-#   weight = 3
-#   url = "portfolio/"
+[[menu.main]]
+  name = "Résumé"
+  weight = 1
+  url = "resume/"
+[[menu.main]]
+  name = "Blog"
+  weight = 2
+  url  = "blog/"
+[[menu.main]]
+  name = "Portfolio"
+  weight = 3
+  url = "portfolio/"
+[[menu.main]]
+  name = "Contact"
+  weight = 4
+  url = "https://cal.com/jorgean/30min"

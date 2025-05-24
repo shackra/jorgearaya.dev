@@ -1,0 +1,9 @@
+<a href="{{ .Params.externalLink | default .RelPermalink }}">
+  <div class="card">
+    {{/* djlint:off H006 */}}<img alt="{{ if .Params.cover }}cover image of the project{{else}}the project have no cover image, using a placeholder instead{{end}}" src="{{ .Params.cover | default "https://placehold.co/1280x760?text=No+Image" }}">{{/* djlint:on */}}
+    <div class="card content">
+      <h2 class="card title">{{.Title}}</h2>
+      <section class="card description">{{.Description}}</section>
+    </div>
+  </div>
+</a>

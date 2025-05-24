@@ -55,9 +55,32 @@
 
               hugo
               djlint
+
+              git
+              git-lfs
+
+              (pkgs.writeScriptBin "project-git-lfs-hook-installer" (builtins.readFile ./etc/scripts/lfs-hook.py))
+
+              (pkgs.python312.withPackages (
+                ps: with ps; [
+                  black
+                  isort
+                  ruff
+                  python-lsp-server
+                  python-lsp-black
+                  python-lsp-ruff
+                  pylsp-rope
+                ]
+              ))
             ];
 
-            inherit (self.checks.${pkgs.system}.pre-commit-check) shellHook;
+            shellHook =
+              self.checks.${pkgs.system}.pre-commit-check.shellHook
+              + ''
+                echo "Injecting Git LFS hooks..."
+                for hook in pre-push post-checkout post-commit post-merge; do
+                  project-git-lfs-hook-installer --stage $hook
+                done'';
             buildInputs = self.checks.${pkgs.system}.pre-commit-check.enabledPackages;
           };
         }
@@ -83,8 +106,6 @@
                 entry = "${pkgs.djlint}/bin/djlint --profile=golang";
                 files = "\\.html$";
               };
-              # check for broken links
-              mkdocs-linkcheck.enable = true;
               # check markdown format is correct
               markdownlint.enable = true;
               # other checkers
