@@ -79,6 +79,15 @@
       enableACME = true;
       forceSSL = true;
       root = "/var/www/jorgearaya.dev";
+
+      extraConfig = ''
+        error_page 404 /404.html;
+        charset utf-8;
+      '';
+
+      locations."/" = {
+        tryFiles = "$uri $uri/ =404";
+      };
     };
   };
 
