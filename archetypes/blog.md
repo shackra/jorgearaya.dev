@@ -3,8 +3,9 @@ disableCall2Action: false
 draft: true
 date: {{ .Date }}
 title: ""
+slug: ""
 cascade:
-- url: /:section/:year-:yearday/:slug
+- url: :year-:yearday/:slug
 description: ""
 authors: ["Jorge"]
 tags: []

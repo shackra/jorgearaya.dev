@@ -4,7 +4,7 @@ draft: false
 date: 2025-05-24T00:23:32-06:00
 title: "Entonces, he iniciado un sitio web"
 cascade:
-- url: /:section/:year-:yearday/:slug
+- url: :year-:yearday/:slug
 description: "Faltan cosas pero el contenido viene pronto"
 slug: "hello-world"
 authors: ["Jorge"]
