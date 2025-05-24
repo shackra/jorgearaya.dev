@@ -1,14 +1,16 @@
 ---
+disableCall2Action: false
 draft: true
 date: {{ .Date }}
 title: ""
+cascade:
+- url: /:section/:year-:yearday/:slug
 description: ""
-slug: ""
-authors: []
+authors: ["Jorge"]
 tags: []
 categories: []
 externalLink: ""
 series: []
 featuredImage: ""
-images: []
+images: ["/images/blog/default.jpg"]
 ---

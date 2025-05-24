@@ -1,17 +1,19 @@
 ---
+disableCall2Action: true
 draft: false
 date: 2025-05-24T00:23:32-06:00
 title: "So, I started a website"
+cascade:
+- url: /:section/:year-:yearday/:slug
 description: "things are missing but content is coming soon"
 slug: "hello-world"
-authors: []
+authors: ["Jorge"]
 tags: []
 categories: [misc]
 externalLink: ""
 series: []
 featuredImage: ""
-images: []
-disableCall2Action: true
+images: ["/images/blog/default.jpg"]
 ---
 
 Welcome!
