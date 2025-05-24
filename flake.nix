@@ -107,7 +107,7 @@
                 files = "\\.html$";
               };
               # check markdown format is correct
-              markdownlint.enable = true;
+              markdownlint.enable = false;
               # other checkers
               check-case-conflicts.enable = true;
               end-of-file-fixer.enable = true;

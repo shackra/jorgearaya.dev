@@ -2,7 +2,10 @@ baseURL = 'https://jorgearaya.dev/'
 languageCode = 'en'
 title = 'Jorge Araya | Freelance Remote Software Engineer'
 theme = 'coder'
-defaultcontentlanguage = "en"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = true
+pluralizeListTitles = false
+enableEmoji = true
 
 [pagination]
 pagerSize = 20
