@@ -1,9 +1,9 @@
 <!-- markdownlint-capture --><!-- markdownlint-disable MD001 MD005 MD041 MD022 -->
 ---
-draft: true
+draft: false
 date: 2025-05-24T00:23:32-06:00
-title: So, I started a website
-description: ""
+title: "So, I started a website"
+description: "things are missing but content is coming soon"
 slug: "hello-world"
 authors: []
 tags: []
