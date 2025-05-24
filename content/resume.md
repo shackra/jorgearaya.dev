@@ -1,6 +1,7 @@
 ---
 title: My Résumé
 draft: false
+date: 2019-05-24T01:23:45-06:00
 images: ["images/resume/cover.jpg"]
 ---
 
