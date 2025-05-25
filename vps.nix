@@ -75,6 +75,14 @@
 
   services.nginx = {
     enable = true;
+    commonHttpConfig = ''
+      map $http_accept_language $preferred_lang {
+        default en;
+        ~^es es;
+        ~^en en;
+      }
+    '';
+
     virtualHosts."jorgearaya.dev" = {
       enableACME = true;
       forceSSL = true;
@@ -87,20 +95,25 @@
 
       locations."/" = {
         tryFiles = "$uri $uri/ =404";
+        extraConfig = ''
+          if ($request_uri = "/") {
+            return 302 /$preferred_lang/;
+          }
+        '';
       };
 
       # dynamic 404
       locations."@localized_404" = {
         extraConfig = ''
-          if ($uri ~ ^/en/) {
-            rewrite ^ /en/404.html break;
-          }
-          if ($uri ~ ^/es/) {
-            rewrite ^ /es/404.html break;
+          if ($uri ~* "^/([a-z]{2})/") {
+            set $lang $1;
           }
 
-          # fallback
-          rewrite ^ /en/404.html break;
+          if ($lang = "") {
+            set $lang $preferred_lang;
+          }
+
+          rewrite ^ /$lang/404.html break;
         '';
       };
     };
