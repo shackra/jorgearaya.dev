@@ -19,7 +19,7 @@ jobs:
           hugo-version: 'latest'
 
       - name: Build
-        run: hugo build --debug --logLevel debug --printI18nWarnings --printPathWarnings --printUnusedTemplates --ignoreCache --gc
+        run: hugo build --logLevel debug --printI18nWarnings --printPathWarnings --printUnusedTemplates --ignoreCache --gc
 
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@v5.1.0
