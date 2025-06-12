@@ -13,6 +13,7 @@ programming_langs: [Golang]
 tech: [IMAP, IMAP IDLE]
 draft: false
 git: https://gitlab.com/shackra/goimapnotify/
+weight: 100
 ---
 
 I started `goimapnotify` back in 2017 because at the time (and currently) did most of my email inside GNU Emacs, my text editor of choice. What `goimapnotify` does is connect with your email server through the IMAP protocol, observe when a new email arrive or was deleted, and execute a script so that your computer does something when something happens in your mailbox.
