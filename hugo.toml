@@ -97,7 +97,7 @@ languageName = ":us:"
 # Español
 [languages.es]
 languageName = "🇨🇷"
-title = "Jorge Araya | Ingeniero de software freelace"
+title = "Jorge Araya | Ingeniero de software freelance"
 
 [languages.es.params]
 author = "Jorge Araya"
