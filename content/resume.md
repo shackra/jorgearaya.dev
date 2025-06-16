@@ -30,6 +30,8 @@ code.
 - Position: Golang Software Engineer
 - What I did:
   - Helped integrate AI as a product into the company's offer
+  - Improved memory usage of deployed LLM with Python's `multiprocessing` library by 95%
+  - Aided junior members of the team with tasks related to Python
 
 ### Crunchyroll (*Nov 2022 – Jun 2023*)
 

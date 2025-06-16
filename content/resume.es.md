@@ -27,6 +27,8 @@ Ya sea construyendo desde cero o escalando, puedo ayudar a entregar código limp
 - Puesto: Golang Software Engineer
 - Lo que hice:
   - Ayudé a integrar IA como producto dentro de la oferta de la empresa
+  - Mejoré en un 95% el uso de memoría de los LLM desplegados con la librería de Python `multiprocessing`
+  - Ayudé a los miembros más *juniors* del equipo con tareas relacionadas a Python
 
 ### Crunchyroll (*Nov 2022 – Jun 2023*)
 
