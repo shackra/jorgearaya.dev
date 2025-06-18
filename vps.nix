@@ -61,12 +61,19 @@
 
   systemd.tmpfiles.rules = [
     "d /var/www/jorgearaya.dev 0755 nginx nginx -"
+    "d /var/www/esavara.cr 0755 nginx nginx -"
+    "d /var/www/esavara.cr/.well-known 0755 nginx nginx -"
   ];
 
   security.acme = {
     acceptTerms = true;
     defaults.email = "jorge+dns@esavara.cr";
     certs."jorgearaya.dev" = {
+      dnsProvider = "digitalocean";
+      environmentFile = config.sops.templates."acme.conf".path;
+      webroot = null;
+    };
+    certs."esavara.cr" = {
       dnsProvider = "digitalocean";
       environmentFile = config.sops.templates."acme.conf".path;
       webroot = null;
@@ -114,6 +121,26 @@
           }
 
           rewrite ^ /$lang/404.html break;
+        '';
+      };
+    };
+
+    virtualHosts."esavara.cr" = {
+      enableACME = true;
+      forceSSL = true;
+      root = "/var/www/esavara.cr";
+
+      extraConfig = ''
+        charset utf-8;
+      '';
+
+      locations."/" = {
+        tryFiles = "$uri $uri/ /index.html =404";
+      };
+
+      locations."/.well-known/nostr.json" = {
+        extraConfig = ''
+          default_type application/json;
         '';
       };
     };
