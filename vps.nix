@@ -141,6 +141,7 @@
       locations."/.well-known/nostr.json" = {
         extraConfig = ''
           default_type application/json;
+          add_header Access-Control-Allow-Origin "*" always;
         '';
       };
     };
