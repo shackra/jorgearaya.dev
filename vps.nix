@@ -6,7 +6,6 @@
 
 {
   imports = [ (modulesPath + "/virtualisation/digital-ocean-config.nix") ];
-  virtualisation.digitalOceanImage.compressionMethod = "bzip2";
 
   nix = {
     settings = {
