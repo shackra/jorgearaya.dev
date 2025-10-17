@@ -51,7 +51,6 @@
       };
 
       jorge = {
-        enable = true;
         createHome = true;
         hashedPasswordFile = config.sops.secrets."users/jorge/hashed_password".path;
         isNormalUser = true;
