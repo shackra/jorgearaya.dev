@@ -31,6 +31,9 @@
     "users/root/hashed_password" = {
       neededForUsers = true;
     };
+    "users/jorge/hashed_password" = {
+      neededForUsers = true;
+    };
   };
   sops.templates."acme.conf".content = ''DO_AUTH_TOKEN=${
     config.sops.placeholder."digitalocean/do_auth_token"
