@@ -1,9 +1,7 @@
 keys:
-  - &woody age1lcq8yz8gcy82g2nslcmg79rw699slaedst6q3t34mfmyvlvawftqls2vmq
-  - &jorgearayadev age1kjvazlawlnts6k48w0jj4qhga2fkakan6qxl5z5sd3glt6zp4e5q54we23
+  - &jorge age1wv34sf9ymnqvr8utp3v7spvwxnxj66mdh7cup4h6x5ca2tkjesqqvl8sxe
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:
       - age:
-         - *woody
-         - *jorgearayadev
+         - *jorge
