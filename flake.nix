@@ -12,6 +12,7 @@
     };
     deploy-rs.url = "github:serokell/deploy-rs";
     flake-schemas.url = "https://flakehub.com/f/DeterminateSystems/flake-schemas/*";
+    nixos-generators.url = "github:nix-community/nixos-generators";
 
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
   };
@@ -25,6 +26,7 @@
       pre-commit-hooks,
       deploy-rs,
       sops-nix,
+      nixos-generators
     }:
     let
       # Helpers for producing system-specific outputs
@@ -43,6 +45,21 @@
     {
       # Schemas tell Nix about the structure of your flake's outputs
       schemas = flake-schemas.schemas;
+
+      packages = forEachSupportedSystem (
+        { pkgs }:
+        {
+          ## NOTE: `nix build .#digital-ocean` construye la imagen
+          digital-ocean = nixos-generators.nixosGenerate {
+            system = pkgs.system;
+            modules = [
+	       sops-nix.nixosModules.sops
+              ./vps.nix
+            ];
+            format = "do";
+          };
+        }
+      );
 
       # Development environments
       devShells = forEachSupportedSystem (
@@ -74,13 +91,11 @@
               ))
             ];
 
-            shellHook =
-              self.checks.${pkgs.system}.pre-commit-check.shellHook
-              + ''
-                echo "Injecting Git LFS hooks..."
-                for hook in pre-push post-checkout post-commit post-merge; do
-                  project-git-lfs-hook-installer --stage $hook
-                done'';
+            shellHook = self.checks.${pkgs.system}.pre-commit-check.shellHook + ''
+              echo "Injecting Git LFS hooks..."
+              for hook in pre-push post-checkout post-commit post-merge; do
+                project-git-lfs-hook-installer --stage $hook
+              done'';
             buildInputs = self.checks.${pkgs.system}.pre-commit-check.enabledPackages;
           };
         }
