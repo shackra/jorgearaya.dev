@@ -41,8 +41,23 @@
 
   users = {
     mutableUsers = false;
-    users.root = {
-      hashedPasswordFile = config.sops.secrets."users/root/hashed_password".path;
+    users = {
+      root = {
+        hashedPasswordFile = config.sops.secrets."users/root/hashed_password".path;
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK0bpO5YAkdfhF+vPm2svNaEM52bezowcuzrOBejzbnw jorge@woody"
+        ];
+      };
+      jorge = {
+        enable = true;
+        createHome = true;
+        hashedPasswordFile = config.sops.secrets."users/jorge/hashed_password".path;
+        isNormalUser = true;
+        extraGroups = [ "wheels" ];
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHigTrMGexf8aE9uPNsk2pOuGzjqQGz94sNMr5iPxrSd jorge@woody"
+        ];
+      };
     };
   };
 
