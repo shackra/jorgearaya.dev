@@ -1,7 +1,9 @@
 keys:
   - &jorge age1wv34sf9ymnqvr8utp3v7spvwxnxj66mdh7cup4h6x5ca2tkjesqqvl8sxe
+  - &remote age1av0l49q3qjrzn88569l0hmd52mj2c4ndua6h4352heux7ege7dkqv222fl
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:
       - age:
          - *jorge
+         - *remote
