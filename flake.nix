@@ -53,8 +53,7 @@
           digital-ocean = nixos-generators.nixosGenerate {
             system = pkgs.system;
             modules = [
-	       sops-nix.nixosModules.sops
-              ./vps.nix
+              ./image.nix
             ];
             format = "do";
           };
