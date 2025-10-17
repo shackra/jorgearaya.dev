@@ -48,6 +48,7 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK0bpO5YAkdfhF+vPm2svNaEM52bezowcuzrOBejzbnw jorge@woody"
         ];
       };
+
       jorge = {
         enable = true;
         createHome = true;
