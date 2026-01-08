@@ -189,6 +189,8 @@
     https = true;
     database.createLocally = true;
     config.adminpassFile = config.sops.secrets."nextcloud/users/admin/password".path;
+    config.dbtype = "sqlite"; # NOTE: this is a single user instance
+    # read in case you want to migrate: https://docs.nextcloud.com/server/latest/admin_manual/configuration_database/db_conversion.html
 
     extraApps = {
       inherit (config.services.nextcloud.package.packages.apps)
