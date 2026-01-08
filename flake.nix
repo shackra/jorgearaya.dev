@@ -51,7 +51,7 @@
         {
           ## NOTE: `nix build .#digital-ocean` construye la imagen
           digital-ocean = nixos-generators.nixosGenerate {
-            system = pkgs.system;
+            system = pkgs.stdenv.hostPlatform.system;
             modules = [
               ./image.nix
             ];
@@ -90,7 +90,7 @@
               ))
             ];
 
-            shellHook = self.checks.${pkgs.system}.pre-commit-check.shellHook + ''
+            shellHook = self.checks.${pkgs.stdenv.hostPlatform.system}.pre-commit-check.shellHook + ''
               echo "Injecting Git LFS hooks..."
               for hook in pre-push post-checkout post-commit post-merge; do
                 project-git-lfs-hook-installer --stage $hook
@@ -103,7 +103,7 @@
       checks = forEachSupportedSystem (
         { pkgs }:
         {
-          pre-commit-check = pre-commit-hooks.lib.${pkgs.system}.run {
+          pre-commit-check = pre-commit-hooks.lib.${pkgs.stdenv.hostPlatform.system}.run {
             src = ./.;
             hooks = {
               # check nix code
