@@ -1,6 +1,7 @@
 {
   modulesPath,
   config,
+  pkgs,
   ...
 }:
 
@@ -34,6 +35,7 @@
     "users/jorge/hashed_password" = {
       neededForUsers = true;
     };
+    "nextcloud/users/admin/password" = { };
   };
   sops.templates."acme.conf".content = ''DO_AUTH_TOKEN=${
     config.sops.placeholder."digitalocean/do_auth_token"
@@ -172,6 +174,33 @@
           add_header Access-Control-Allow-Origin "*" always;
         '';
       };
+    };
+
+    virtualHosts.${config.services.nextcloud.hostName} = {
+      forceSSL = true;
+      enableACME = true;
+    };
+  };
+
+  services.nextcloud = {
+    enable = true;
+    package = pkgs.nextcloud32;
+    hostName = "nc.esavara.cr";
+    https = true;
+    database.createLocally = true;
+    config.adminpassFile = config.sops.secrets."nextcloud/users/admin/password".path;
+
+    extraApps = {
+      inherit (config.services.nextcloud.package.packages.apps)
+        news
+        bookmarks
+        ;
+    };
+    extraAppsEnable = true;
+
+    settings = {
+      mail_smtpmode = "sendmail";
+      mail_sendmailmode = "pipe";
     };
   };
 
