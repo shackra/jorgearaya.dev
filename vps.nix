@@ -184,12 +184,14 @@
         # Security headers
         add_header X-Content-Type-Options "nosniff" always;
         add_header X-Frame-Options "SAMEORIGIN" always;
-        add_header X-XSS-Protection "1; mode=block" always;     # opcional, pero muy común
+        add_header X-XSS-Protection "1; mode=block" always;
         add_header X-Robots-Tag "noindex, nofollow" always;
         add_header X-Permitted-Cross-Domain-Policies "none" always;
         add_header Referrer-Policy "no-referrer" always;
 
-        # Oculta que estás usando PHP/Nginx (reduce fingerprinting)
+        # HSTS
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
         server_tokens off;
       '';
     };
