@@ -179,21 +179,6 @@
     virtualHosts.${config.services.nextcloud.hostName} = {
       forceSSL = true;
       enableACME = true;
-
-      extraConfig = ''
-        # Security headers
-        add_header X-Content-Type-Options "nosniff" always;
-        add_header X-Frame-Options "SAMEORIGIN" always;
-        add_header X-XSS-Protection "1; mode=block" always;
-        add_header X-Robots-Tag "noindex, nofollow" always;
-        add_header X-Permitted-Cross-Domain-Policies "none" always;
-        add_header Referrer-Policy "no-referrer" always;
-
-        # HSTS
-        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-
-        server_tokens off;
-      '';
     };
   };
 
