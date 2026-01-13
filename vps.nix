@@ -209,6 +209,7 @@
       mail_smtpmode = "sendmail";
       mail_sendmailmode = "pipe";
     };
+    caching.redis = true;
   };
 
   system.stateVersion = "24.11";
