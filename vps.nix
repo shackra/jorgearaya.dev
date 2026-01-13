@@ -108,6 +108,11 @@
       environmentFile = config.sops.templates."acme.conf".path;
       webroot = null;
     };
+    certs.${config.services.nextcloud.hostName} = {
+      dnsProvider = "digitalocean";
+      environmentFile = config.sops.templates."acme.conf".path;
+      webroot = null;
+    };
   };
 
   services.nginx = {
