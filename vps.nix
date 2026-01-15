@@ -201,6 +201,7 @@
       inherit (config.services.nextcloud.package.packages.apps)
         news
         bookmarks
+        forms
         ;
     };
     extraAppsEnable = true;
