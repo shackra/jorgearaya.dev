@@ -110,7 +110,6 @@
               nil.enable = true;
               # check that secrets aren't committed to the repository
               pre-commit-hook-ensure-sops.enable = true;
-              ripsecrets.enable = true;
               # self-explanatory
               check-toml.enable = true;
               # lint template files, go templates for my use-case
