@@ -39,6 +39,7 @@
     "wireguard/private_key" = { };
     "wireguard/preshared_keys/pc" = { };
     "wireguard/preshared_keys/phone" = { };
+    "radicle/auth/privateKey" = { };
   };
   sops.templates."acme.conf".content = "DO_AUTH_TOKEN=${
     config.sops.placeholder."digitalocean/do_auth_token"
@@ -243,6 +244,39 @@
       mail_sendmailmode = "pipe";
     };
     caching.redis = true;
+  };
+
+  security.acme.certs."jardin.jorgearaya.dev" = {
+    dnsProvider = "digitalocean";
+    environmentFile = config.sops.templates."acme.conf".path;
+    webroot = null;
+  };
+
+  services.radicle = {
+    enable = true;
+    privateKeyFile = config.sops.secrets."radicle/auth/privateKey".path;
+    publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFZQ3w70MJIqT+Eb4jnu6tGeeecTM0AnSKC+ylbPxtoA radicle";
+    node.openFirewall = true;
+    node.listenAddress = "0.0.0.0";
+    settings = {
+      node = {
+        alias = "jardin.jorgearaya.dev";
+        externalAddresses = [ "jardin.jorgearaya.dev:8776" ];
+        policy = "block";
+        scope = "all";
+      };
+      seeds = {
+        "rad:zecRiYjpjFnZWFhygfVM7shaCzJh" = "allow";
+        "rad:z39RJHSHs166S5kr8Qstj6kd1LFah" = "allow";
+        "rad:z3nbrAFyNBdKxS8RpVEy4KCUBk66y" = "allow";
+        "rad:z3mUnND1ZXQaLhSAcf26SFmdJ6sCh" = "allow";
+        "rad:z2yWgtRWDbdZqzJGEfWDi9NetLZ7o" = "allow";
+      };
+    };
+    httpd.enable = true;
+    httpd.nginx.serverName = "jardin.jorgearaya.dev";
+    httpd.nginx.enableACME = true;
+    httpd.nginx.forceSSL = true;
   };
 
   system.stateVersion = "24.11";
