@@ -278,15 +278,25 @@
       node = {
         alias = "jardin.jorgearaya.dev";
         externalAddresses = [ "jardin.jorgearaya.dev:8776" ];
-        policy = "block";
-        scope = "all";
+        seedingPolicy = {
+          default = "block";
+        };
+        connect = [
+          "z6MknSLrJoTcukLrE435hVNQT4JUhbvWLX4kUzqkEStBU8Vi@seed.radicle.garden:8776"
+          "z6MksmpU5b1dS7oaqF2bHXhQi1DWy2hB7Mh9CuN7y1DN6QSz@seed.radicle.xyz:58776"
+          "z6MkrLMMsiPWUcNPHcRajuMi9mDfYckSoJyPwwnknocNYPm7@iris.radicle.xyz:58776"
+        ];
       };
-      seeds = {
-        "rad:zecRiYjpjFnZWFhygfVM7shaCzJh" = "allow";
-        "rad:z39RJHSHs166S5kr8Qstj6kd1LFah" = "allow";
-        "rad:z3nbrAFyNBdKxS8RpVEy4KCUBk66y" = "allow";
-        "rad:z3mUnND1ZXQaLhSAcf26SFmdJ6sCh" = "allow";
-        "rad:z2yWgtRWDbdZqzJGEfWDi9NetLZ7o" = "allow";
+      web = {
+	pinned = {
+          repositories = [
+            "rad:z39RJHSHs166S5kr8Qstj6kd1LFah" # Goimapnotify
+	    "rad:z3mUnND1ZXQaLhSAcf26SFmdJ6sCh" # liber-modestus
+	    "rad:z2yWgtRWDbdZqzJGEfWDi9NetLZ7o" # The Rule
+          ];
+        };
+        bannerUrl = "https://misc.jorgearaya.dev/Flores%20de%20Navidad%20por%20Claude%20Monet.jpg";
+        description = "🇪🇸 Proyectos personales (públicos y privados) de Jorge Javier Araya Navarro (c.c. Shackra). 🇺🇸 Personal projects (public and private) by Jorge Javier Araya Navarro (a.k.a. Shackra)";
       };
     };
     httpd.enable = true;
