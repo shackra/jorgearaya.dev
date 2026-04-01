@@ -288,6 +288,10 @@
         "rad:z3mUnND1ZXQaLhSAcf26SFmdJ6sCh" = "allow";
         "rad:z2yWgtRWDbdZqzJGEfWDi9NetLZ7o" = "allow";
       };
+      web = {
+        bannerUrl = "https://misc.jorgearaya.dev/Flores%20de%20Navidad%20por%20Claude%20Monet.jpg";
+        description = "🇪🇸 Proyectos personales (públicos y privados) de Jorge Javier Araya Navarro (c.c. Shackra)\n🇺🇸 Personal projects (public and private) by Jorge Javier Araya Navarro (a.k.a. Shackra)";
+      };
     };
     httpd.enable = true;
     httpd.nginx.serverName = "jardin.jorgearaya.dev";
