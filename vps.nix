@@ -126,6 +126,7 @@
     "d /var/www/jorgearaya.dev 0755 nginx nginx -"
     "d /var/www/esavara.cr 0755 nginx nginx -"
     "d /var/www/esavara.cr/.well-known 0755 nginx nginx -"
+    "d /var/www/misc.jorgearaya.dev 0755 nginx nginx -"
   ];
 
   security.acme = {
@@ -142,6 +143,11 @@
       webroot = null;
     };
     certs.${config.services.nextcloud.hostName} = {
+      dnsProvider = "digitalocean";
+      environmentFile = config.sops.templates."acme.conf".path;
+      webroot = null;
+    };
+    certs."misc.jorgearaya.dev" = {
       dnsProvider = "digitalocean";
       environmentFile = config.sops.templates."acme.conf".path;
       webroot = null;
@@ -217,6 +223,16 @@
     virtualHosts.${config.services.nextcloud.hostName} = {
       forceSSL = true;
       enableACME = true;
+    };
+
+    virtualHosts."misc.jorgearaya.dev" = {
+      enableACME = true;
+      forceSSL = true;
+      root = "/var/www/misc.jorgearaya.dev";
+
+      locations."/" = {
+        tryFiles = "$uri $uri/ =404";
+      };
     };
   };
 
