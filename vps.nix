@@ -292,6 +292,7 @@
             "rad:z39RJHSHs166S5kr8Qstj6kd1LFah" # Goimapnotify
 	    "rad:z3mUnND1ZXQaLhSAcf26SFmdJ6sCh" # liber-modestus
 	    "rad:z2yWgtRWDbdZqzJGEfWDi9NetLZ7o" # The Rule
+	    "rad:zecRiYjpjFnZWFhygfVM7shaCzJh"  # Backpack Emacs
           ];
         };
         bannerUrl = "https://misc.jorgearaya.dev/Flores%20de%20Navidad%20por%20Claude%20Monet.jpg";
