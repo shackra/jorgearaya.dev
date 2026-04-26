@@ -13,6 +13,7 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     flake-schemas.url = "https://flakehub.com/f/DeterminateSystems/flake-schemas/*";
     nixos-generators.url = "github:nix-community/nixos-generators";
+    antispam.url = "github:shackra/antispam";
 
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
   };
@@ -26,7 +27,8 @@
       pre-commit-hooks,
       deploy-rs,
       sops-nix,
-      nixos-generators
+      nixos-generators,
+      antispam
     }:
     let
       # Helpers for producing system-specific outputs
@@ -134,6 +136,7 @@
         system = "x86_64-linux";
         modules = [
           sops-nix.nixosModules.sops
+	  antispam.nixosModules.default
           ./vps.nix
         ];
       };
