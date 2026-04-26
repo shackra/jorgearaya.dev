@@ -40,9 +40,14 @@
     "wireguard/preshared_keys/pc" = { };
     "wireguard/preshared_keys/phone" = { };
     "radicle/auth/privateKey" = { };
+    "services/antispam/telegram_key" = { };
   };
   sops.templates."acme.conf".content = "DO_AUTH_TOKEN=${
     config.sops.placeholder."digitalocean/do_auth_token"
+  }";
+
+  sops.templates."antispam".content = "TELEGRAM_BOT_KEY=${
+    config.sops.placeholder."services/antispam/telegram_key"
   }";
 
   users = {
@@ -287,12 +292,12 @@
         ];
       };
       web = {
-	pinned = {
+        pinned = {
           repositories = [
             "rad:z39RJHSHs166S5kr8Qstj6kd1LFah" # Goimapnotify
-	    "rad:z3mUnND1ZXQaLhSAcf26SFmdJ6sCh" # liber-modestus
-	    "rad:z2yWgtRWDbdZqzJGEfWDi9NetLZ7o" # The Rule
-	    "rad:zecRiYjpjFnZWFhygfVM7shaCzJh"  # Backpack Emacs
+            "rad:z3mUnND1ZXQaLhSAcf26SFmdJ6sCh" # liber-modestus
+            "rad:z2yWgtRWDbdZqzJGEfWDi9NetLZ7o" # The Rule
+            "rad:zecRiYjpjFnZWFhygfVM7shaCzJh" # Backpack Emacs
           ];
         };
         bannerUrl = "https://misc.jorgearaya.dev/Flores%20de%20Navidad%20por%20Claude%20Monet.jpg";
@@ -303,6 +308,11 @@
     httpd.nginx.serverName = "jardin.jorgearaya.dev";
     httpd.nginx.enableACME = true;
     httpd.nginx.forceSSL = true;
+  };
+
+  services.emacs-antispam-bot = {
+    enable = true;
+    tokenFile = config.sops.templates."antispam".path;
   };
 
   system.stateVersion = "24.11";
