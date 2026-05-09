@@ -199,7 +199,7 @@ in
           LoadModule = [ "simple_away" "keepnick" "savebuff" "sasl" ];
         };
         Network.efnet = {
-          Server = "irc.efnet.org +6697";
+          Server = "irc.choopa.net +6697";
           Nick = nicks.efnet;
           AltNick = "${nicks.efnet}_";
           Ident = nicks.efnet;
