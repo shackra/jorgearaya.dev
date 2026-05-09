@@ -38,7 +38,14 @@
         nixpkgs.lib.genAttrs supportedSystems (
           system:
           f {
-            pkgs = import nixpkgs { inherit system; };
+            pkgs = import nixpkgs {
+              inherit system;
+              config.allowUnfreePredicate =
+                pkg:
+                builtins.elem (nixpkgs.lib.getName pkg) [
+                  "terraform"
+                ];
+            };
           }
         );
 
@@ -79,6 +86,7 @@
 
               terraform-ls
               terraform
+              doctl
 
               (pkgs.writeScriptBin "project-git-lfs-hook-installer" (builtins.readFile ./etc/scripts/lfs-hook.py))
 
