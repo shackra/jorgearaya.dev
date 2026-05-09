@@ -2,7 +2,7 @@ resource "digitalocean_record" "dmarc" {
   domain = digitalocean_domain.esavara.name
   type   = "CNAME"
   name   = "_dmarc"
-  value  = "_dmarc.esavara_cr._d.easydmarc.pro"
+  value  = "_dmarc.esavara_cr._d.easydmarc.pro."
   ttl    = 43200
 }
 
