@@ -75,12 +75,10 @@ ZNC uses a Let's Encrypt cert for `znc.jorgearaya.dev` via DigitalOcean DNS chal
 
 ## Nick obfuscation
 
-Nicks for undernet, rizon, and efnet are stored in `irc-nicks.nix` (gitignored). Edit that file to change nicks:
+Nicks for undernet, rizon, and efnet are base64-encoded in `znc.nix` to prevent web crawlers from indexing them. Decoded at Nix evaluation time via `lib/base64.nix`.
 
-```nix
-{
-  undernet = "your_nick";
-  rizon = "your_nick";
-  efnet = "your_nick";
-}
+To change a nick, encode it and update `znc.nix`:
+
+```sh
+echo -n "yournick" | base64
 ```

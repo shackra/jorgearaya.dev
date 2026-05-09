@@ -2,11 +2,17 @@
   modulesPath,
   config,
   pkgs,
+  lib,
   ...
 }:
 
 let
-  nicks = import ./irc-nicks.nix;
+  base64 = import ./lib/base64.nix { inherit lib; };
+  nicks = {
+    undernet = base64.decode "a3JhZWxfdg==";
+    rizon = base64.decode "b255eF9kcmlmdA==";
+    efnet = base64.decode "Z2xhc3NwaW5l";
+  };
 in
 {
   imports = [ (modulesPath + "/virtualisation/digital-ocean-config.nix") ];
