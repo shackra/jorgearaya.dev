@@ -36,10 +36,7 @@
       neededForUsers = true;
     };
     "nextcloud/users/admin/password" = { };
-    "wireguard/private_key" = { };
-    "wireguard/preshared_keys/pc" = { };
-    "wireguard/preshared_keys/phone" = { };
-    "radicle/auth/privateKey" = { };
+"radicle/auth/privateKey" = { };
     "services/antispam/telegram_key" = { };
   };
   sops.templates."acme.conf".content = "DO_AUTH_TOKEN=${
@@ -72,41 +69,12 @@
     };
   };
 
-  # Enable IP forwarding so the VPS can route traffic between WireGuard peers
-  # (e.g. Phone -> VPS -> PC for Jellyfin access)
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = 1;
-  };
-
   networking = {
     hostName = "jorgearayadev";
     firewall = {
       enable = true;
       allowedTCPPorts = [
         443
-      ];
-      allowedUDPPorts = [
-        51820 # WireGuard
-      ];
-    };
-    wireguard.interfaces.wg0 = {
-      ips = [ "10.100.0.1/24" ];
-      listenPort = 51820;
-      privateKeyFile = config.sops.secrets."wireguard/private_key".path;
-
-      peers = [
-        {
-          # PC
-          publicKey = "xAPHNBHdLLvuvjI4Nk/E733MaafC69xg3uiaXk5hKzA=";
-          presharedKeyFile = config.sops.secrets."wireguard/preshared_keys/pc".path;
-          allowedIPs = [ "10.100.0.2/32" ];
-        }
-        {
-          # Phone
-          publicKey = "K0lN1fPSG4SbV2vz8uqSXzt1eEuHKduogXO+MOza7Dg=";
-          presharedKeyFile = config.sops.secrets."wireguard/preshared_keys/phone".path;
-          allowedIPs = [ "10.100.0.3/32" ];
-        }
       ];
     };
   };

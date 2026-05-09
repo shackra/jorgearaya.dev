@@ -152,12 +152,46 @@
         ];
       };
 
+      nixosConfigurations.vpn = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          sops-nix.nixosModules.sops
+          ./vpn.nix
+        ];
+      };
+
+      nixosConfigurations.znc = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          sops-nix.nixosModules.sops
+          ./znc.nix
+        ];
+      };
+
       deploy.nodes.site = {
         hostname = host;
         profiles.system = {
           sshUser = "root";
           user = "root";
           path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.site;
+        };
+      };
+
+      deploy.nodes.vpn = {
+        hostname = "vpn.jorgearaya.dev";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.vpn;
+        };
+      };
+
+      deploy.nodes.znc = {
+        hostname = "znc.jorgearaya.dev";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.znc;
         };
       };
     };
