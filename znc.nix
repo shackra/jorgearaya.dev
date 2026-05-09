@@ -189,6 +189,7 @@ in
           Nick = nicks.undernet;
           AltNick = "${nicks.undernet}_";
           Ident = nicks.undernet;
+          RealName = nicks.undernet;
           LoadModule = [ "simple_away" "keepnick" "savebuff" "perform" ];
         };
         Network.rizon = {
@@ -196,6 +197,7 @@ in
           Nick = nicks.rizon;
           AltNick = "${nicks.rizon}_";
           Ident = nicks.rizon;
+          RealName = nicks.rizon;
           LoadModule = [ "simple_away" "keepnick" "savebuff" "sasl" ];
         };
         Network.efnet = {
@@ -203,6 +205,7 @@ in
           Nick = nicks.efnet;
           AltNick = "${nicks.efnet}_";
           Ident = nicks.efnet;
+          RealName = nicks.efnet;
           LoadModule = [ "simple_away" "keepnick" "savebuff" ];
         };
       };
