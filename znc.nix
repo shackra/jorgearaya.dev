@@ -5,6 +5,9 @@
   ...
 }:
 
+let
+  nicks = import ./irc-nicks.nix;
+in
 {
   imports = [ (modulesPath + "/virtualisation/digital-ocean-config.nix") ];
 
@@ -141,13 +144,59 @@
         Pass = "md5#::#::#"; # fake hash — auth via SASL/PAM only
         Network.liberachat = {
           Server = "irc.libera.chat +6697";
-          LoadModule = [ "simple_away" "keepnick" "savebuff" ];
+          LoadModule = [ "simple_away" "keepnick" "savebuff" "sasl" ];
           Chan = {
             "#nixos" = { };
+            "#nixos-dev" = { };
+            "#linux" = { };
+            "#libera" = { };
+            "#archlinux" = { };
+            "#python" = { };
+            "#kde" = { };
+            "#lobsters" = { };
+            "##rust" = { };
+            "#security" = { };
+            "##programming" = { };
+            "#bash" = { };
+            "#git" = { };
+            "#hardware" = { };
+            "#go-nuts" = { };
+            "#zig" = { };
+            "#emacs" = { };
+            "#emacs-beginners" = { };
+            "#c" = { };
+            "#c++" = { };
           };
         };
         Network.oftc = {
           Server = "irc.oftc.net +6697";
+          Nick = "shackra_";
+          AltNick = "shackra__";
+          Ident = "shackra_";
+          LoadModule = [ "simple_away" "keepnick" "savebuff" "sasl" ];
+          Chan = {
+            "#fdroid" = { };
+          };
+        };
+        Network.undernet = {
+          Server = "irc.undernet.org +6697";
+          Nick = nicks.undernet;
+          AltNick = "${nicks.undernet}_";
+          Ident = nicks.undernet;
+          LoadModule = [ "simple_away" "keepnick" "savebuff" "perform" ];
+        };
+        Network.rizon = {
+          Server = "irc.rizon.net +6697";
+          Nick = nicks.rizon;
+          AltNick = "${nicks.rizon}_";
+          Ident = nicks.rizon;
+          LoadModule = [ "simple_away" "keepnick" "savebuff" "sasl" ];
+        };
+        Network.efnet = {
+          Server = "irc.efnet.org +6697";
+          Nick = nicks.efnet;
+          AltNick = "${nicks.efnet}_";
+          Ident = nicks.efnet;
           LoadModule = [ "simple_away" "keepnick" "savebuff" ];
         };
       };
