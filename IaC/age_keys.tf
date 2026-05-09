@@ -12,7 +12,7 @@ data "external" "age_key" {
   program = [
     "bash", "-c",
     <<-EOT
-      key=$(ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 root@${each.value} \
+      key=$(ssh -i ~/.ssh/id_jorgearayadev -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 root@${each.value} \
         "nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'" 2>/dev/null)
       echo "{\"age_key\": \"$key\"}"
     EOT

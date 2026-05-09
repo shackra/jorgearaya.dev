@@ -19,6 +19,7 @@ resource "digitalocean_droplet" "vpn" {
   region   = "nyc1"
   tags     = ["nixos"]
   vpc_uuid = digitalocean_vpc.default.id
+  ssh_keys = [data.digitalocean_ssh_key.default.fingerprint]
 }
 
 resource "digitalocean_droplet" "znc" {
@@ -28,4 +29,5 @@ resource "digitalocean_droplet" "znc" {
   region   = "nyc1"
   tags     = ["nixos"]
   vpc_uuid = digitalocean_vpc.default.id
+  ssh_keys = [data.digitalocean_ssh_key.default.fingerprint]
 }
