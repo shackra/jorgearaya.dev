@@ -18,10 +18,3 @@ data "external" "age_key" {
     EOT
   ]
 }
-
-output "age_keys" {
-  description = "Age public keys derived from each droplet's SSH host key"
-  value = {
-    for name, _ in local.droplets : name => data.external.age_key[name].result.age_key
-  }
-}
