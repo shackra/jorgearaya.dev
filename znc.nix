@@ -1,6 +1,7 @@
 {
   modulesPath,
   config,
+  pkgs,
   ...
 }:
 
@@ -33,8 +34,9 @@
     "users/jorge/hashed_password" = {
       neededForUsers = true;
     };
-    "znc/hash" = { };
-    "znc/salt" = { };
+    "znc/password" = {
+      neededForUsers = true;
+    };
   };
 
   users = {
@@ -56,8 +58,32 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHigTrMGexf8aE9uPNsk2pOuGzjqQGz94sNMr5iPxrSd jorge@woody"
         ];
       };
+
+      "znc-admin" = {
+        isSystemUser = true;
+        group = "znc-admin";
+        hashedPasswordFile = config.sops.secrets."znc/password".path;
+      };
     };
+    groups."znc-admin" = { };
   };
+
+  # cyrusauth talks to saslauthd, which authenticates via PAM
+  services.saslauthd.enable = true;
+
+  environment.etc."pam.d/znc" = {
+    source = pkgs.writeText "znc.pam" ''
+      account required pam_unix.so
+      auth sufficient pam_unix.so likeauth try_first_pass
+      auth required pam_deny.so
+      password sufficient pam_unix.so nullok sha512
+      session required pam_env.so conffile=/etc/pam/environment readenv=0
+      session required pam_unix.so
+    '';
+  };
+
+  # allow ZNC service to talk to saslauthd's unix socket
+  systemd.services.znc.serviceConfig.RestrictAddressFamilies = [ "AF_UNIX" ];
 
   networking = {
     hostName = "irc-bouncer";
@@ -76,23 +102,15 @@
     openFirewall = true;
 
     config = {
-      LoadModule = [ "adminlog" ];
-      User.shackra = {
+      LoadModule = [ "adminlog" "cyrusauth saslauthd" ];
+      User."znc-admin" = {
         Admin = true;
         Nick = "shackra";
         AltNick = "shackra_";
         Ident = "shackra";
         RealName = "Jorge Araya";
         LoadModule = [ "chansaver" "controlpanel" ];
-        Pass.password = {
-          Method = "SHA256";
-          Hash = {
-            _secret = config.sops.secrets."znc/hash".path;
-          };
-          Salt = {
-            _secret = config.sops.secrets."znc/salt".path;
-          };
-        };
+        Pass = "md5#::#::#"; # fake hash — auth via SASL/PAM only
         Network.liberachat = {
           Server = "irc.libera.chat +6697";
           LoadModule = [ "simple_away" "keepnick" "savebuff" ];
