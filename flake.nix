@@ -28,7 +28,7 @@
       deploy-rs,
       sops-nix,
       nixos-generators,
-      antispam
+      antispam,
     }:
     let
       # Helpers for producing system-specific outputs
@@ -76,6 +76,9 @@
 
               git
               git-lfs
+
+              terraform-ls
+              terraform
 
               (pkgs.writeScriptBin "project-git-lfs-hook-installer" (builtins.readFile ./etc/scripts/lfs-hook.py))
 
@@ -136,7 +139,7 @@
         system = "x86_64-linux";
         modules = [
           sops-nix.nixosModules.sops
-	  antispam.nixosModules.default
+          antispam.nixosModules.default
           ./vps.nix
         ];
       };
