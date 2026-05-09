@@ -37,7 +37,12 @@
     "znc/password" = {
       neededForUsers = true;
     };
+    "digitalocean/do_auth_token" = { };
   };
+
+  sops.templates."acme.conf".content = "DO_AUTH_TOKEN=${
+    config.sops.placeholder."digitalocean/do_auth_token"
+  }";
 
   users = {
     mutableUsers = false;
@@ -84,6 +89,29 @@
 
   # allow ZNC service to talk to saslauthd's unix socket
   systemd.services.znc.serviceConfig.RestrictAddressFamilies = [ "AF_UNIX" ];
+  # ensure ACME cert is ready before ZNC starts
+  systemd.services.znc.after = [ "acme-znc.jorgearaya.dev.service" ];
+  systemd.services.znc.wants = [ "acme-znc.jorgearaya.dev.service" ];
+
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "jorge+dns@esavara.cr";
+    certs."znc.jorgearaya.dev" = {
+      dnsProvider = "digitalocean";
+      environmentFile = config.sops.templates."acme.conf".path;
+      webroot = null;
+      group = "znc";
+      # combine cert + key into ZNC's expected pem format
+      postRun = ''
+        cat ${config.security.acme.certs."znc.jorgearaya.dev".directory}/fullchain.pem \
+            ${config.security.acme.certs."znc.jorgearaya.dev".directory}/key.pem \
+            > /var/lib/znc/znc.pem
+        chown znc:znc /var/lib/znc/znc.pem
+        chmod 600 /var/lib/znc/znc.pem
+        systemctl restart znc
+      '';
+    };
+  };
 
   networking = {
     hostName = "irc-bouncer";
