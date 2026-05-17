@@ -1,9 +1,16 @@
 keys:
   - &jorge age1wv34sf9ymnqvr8utp3v7spvwxnxj66mdh7cup4h6x5ca2tkjesqqvl8sxe
-  - &remote age1av0l49q3qjrzn88569l0hmd52mj2c4ndua6h4352heux7ege7dkqv222fl
+  - &website age1av0l49q3qjrzn88569l0hmd52mj2c4ndua6h4352heux7ege7dkqv222fl
+  - &vpn age1fls4xdzcvwuvp9a8xgvtj7ft9hs6j7krgysjjx906lfq5ywah3qsfj8mqc
+  - &znc age1rrm6pf0c84cg09gnytywcsjw5ff32799x2s837qya49xwgwycdps227x7z
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:
       - age:
-         - *jorge
-         - *remote
+          - *jorge
+          - *website
+          - *vpn
+          - *znc
+# Local Variables:
+# tab-width: 2
+# End:

@@ -28,7 +28,7 @@
       deploy-rs,
       sops-nix,
       nixos-generators,
-      antispam
+      antispam,
     }:
     let
       # Helpers for producing system-specific outputs
@@ -38,7 +38,14 @@
         nixpkgs.lib.genAttrs supportedSystems (
           system:
           f {
-            pkgs = import nixpkgs { inherit system; };
+            pkgs = import nixpkgs {
+              inherit system;
+              config.allowUnfreePredicate =
+                pkg:
+                builtins.elem (nixpkgs.lib.getName pkg) [
+                  "terraform"
+                ];
+            };
           }
         );
 
@@ -76,6 +83,10 @@
 
               git
               git-lfs
+
+              terraform-ls
+              terraform
+              doctl
 
               (pkgs.writeScriptBin "project-git-lfs-hook-installer" (builtins.readFile ./etc/scripts/lfs-hook.py))
 
@@ -136,8 +147,24 @@
         system = "x86_64-linux";
         modules = [
           sops-nix.nixosModules.sops
-	  antispam.nixosModules.default
+          antispam.nixosModules.default
           ./vps.nix
+        ];
+      };
+
+      nixosConfigurations.vpn = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          sops-nix.nixosModules.sops
+          ./vpn.nix
+        ];
+      };
+
+      nixosConfigurations.znc = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          sops-nix.nixosModules.sops
+          ./znc.nix
         ];
       };
 
@@ -147,6 +174,24 @@
           sshUser = "root";
           user = "root";
           path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.site;
+        };
+      };
+
+      deploy.nodes.vpn = {
+        hostname = "vpn.jorgearaya.dev";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.vpn;
+        };
+      };
+
+      deploy.nodes.znc = {
+        hostname = "znc.jorgearaya.dev";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.znc;
         };
       };
     };
