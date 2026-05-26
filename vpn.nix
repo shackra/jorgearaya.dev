@@ -33,9 +33,6 @@
     "users/jorge/hashed_password" = {
       neededForUsers = true;
     };
-    "wireguard/private_key" = { };
-    "wireguard/preshared_keys/pc" = { };
-    "wireguard/preshared_keys/phone" = { };
   };
 
   users = {
@@ -60,38 +57,75 @@
     };
   };
 
-  # Enable IP forwarding so the VPS can route traffic between WireGuard peers
-  # (e.g. Phone -> VPS -> PC for Jellyfin access)
+  # IP forwarding for subnet routing
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
   };
 
+  # Headscale - self-hosted Tailscale control server
+  services.headscale = {
+    enable = true;
+    address = "0.0.0.0";
+    port = 8080;
+
+    settings = {
+      server_url = "https://vpn.jorgearaya.dev";
+
+      dns = {
+        base_domain = "lan";
+        magic_dns = true;
+        nameservers.global = [
+          "1.1.1.1"
+          "9.9.9.9"
+        ];
+      };
+
+      prefixes = {
+        v4 = "100.64.0.0/10";
+      };
+
+      derp.server.enabled = false;
+
+      database.type = "sqlite3";
+      database.sqlite.path = "/var/lib/headscale/db.sqlite";
+
+      logtail.enabled = false;
+    };
+  };
+
+  # Nginx reverse proxy with TLS
+  services.nginx = {
+    enable = true;
+    recommendedTlsSettings = true;
+    recommendedProxySettings = true;
+
+    virtualHosts."vpn.jorgearaya.dev" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8080";
+        proxyWebsockets = true;
+        extraConfig = ''
+          proxy_buffering off;
+          proxy_redirect http:// https://;
+        '';
+      };
+    };
+  };
+
+  # ACME / Let's Encrypt
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "jorge@jorgearaya.dev";
+  };
+
   networking = {
-    hostName = "wireguard";
+    hostName = "headscale";
     firewall = {
       enable = true;
-      allowedUDPPorts = [
-        51820 # WireGuard
-      ];
-    };
-    wireguard.interfaces.wg0 = {
-      ips = [ "10.100.0.1/24" ];
-      listenPort = 51820;
-      privateKeyFile = config.sops.secrets."wireguard/private_key".path;
-
-      peers = [
-        {
-          # PC
-          publicKey = "xAPHNBHdLLvuvjI4Nk/E733MaafC69xg3uiaXk5hKzA=";
-          presharedKeyFile = config.sops.secrets."wireguard/preshared_keys/pc".path;
-          allowedIPs = [ "10.100.0.2/32" ];
-        }
-        {
-          # Phone
-          publicKey = "K0lN1fPSG4SbV2vz8uqSXzt1eEuHKduogXO+MOza7Dg=";
-          presharedKeyFile = config.sops.secrets."wireguard/preshared_keys/phone".path;
-          allowedIPs = [ "10.100.0.3/32" ];
-        }
+      allowedTCPPorts = [
+        80 # ACME HTTP-01 challenge
+        443 # HTTPS
       ];
     };
   };
