@@ -32,6 +32,14 @@ resource "digitalocean_record" "esavara_www_nc" {
   ttl    = 3600
 }
 
+resource "digitalocean_record" "esavara_vikunja" {
+  domain = digitalocean_domain.esavara.name
+  type   = "A"
+  name   = "todo"
+  value  = digitalocean_droplet.website.ipv4_address
+  ttl    = 3600
+}
+
 resource "digitalocean_record" "misc" {
   domain = digitalocean_domain.default.name
   type   = "A"
