@@ -74,10 +74,8 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [
+        80
         443
-      ];
-      interfaces."tailscale0".allowedTCPPorts = [
-        config.services.vikunja.port
       ];
     };
   };
@@ -124,6 +122,11 @@
       webroot = null;
     };
     certs."misc.jorgearaya.dev" = {
+      dnsProvider = "digitalocean";
+      environmentFile = config.sops.templates."acme.conf".path;
+      webroot = null;
+    };
+    certs.${config.services.vikunja.frontendHostname} = {
       dnsProvider = "digitalocean";
       environmentFile = config.sops.templates."acme.conf".path;
       webroot = null;
@@ -199,6 +202,25 @@
     virtualHosts.${config.services.nextcloud.hostName} = {
       forceSSL = true;
       enableACME = true;
+    };
+
+    virtualHosts.${config.services.vikunja.frontendHostname} = {
+      forceSSL = true;
+      enableACME = true;
+
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString config.services.vikunja.port}";
+        extraConfig = ''
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_redirect off;
+        '';
+      };
     };
 
     virtualHosts."misc.jorgearaya.dev" = {
@@ -283,6 +305,7 @@
 
   services.vikunja = {
     enable = true;
+    address = "127.0.0.1";
     port = 3456;
     database = {
       type = "sqlite";
