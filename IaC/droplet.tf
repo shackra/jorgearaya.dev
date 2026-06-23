@@ -16,7 +16,7 @@ resource "digitalocean_droplet" "website" {
 resource "digitalocean_droplet" "vpn" {
   name     = "wireguard"
   image    = data.digitalocean_image.default_nixos.id
-  size     = var.sizes["small"]
+  size     = var.sizes["medium"]
   region   = "nyc1"
   tags     = ["nixos"]
   vpc_uuid = digitalocean_vpc.default.id
