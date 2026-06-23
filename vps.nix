@@ -36,7 +36,7 @@
       neededForUsers = true;
     };
     "nextcloud/users/admin/password" = { };
-"radicle/auth/privateKey" = { };
+    "radicle/auth/privateKey" = { };
     "services/antispam/telegram_key" = { };
   };
   sops.templates."acme.conf".content = "DO_AUTH_TOKEN=${
@@ -75,6 +75,9 @@
       enable = true;
       allowedTCPPorts = [
         443
+      ];
+      interfaces."tailscale0".allowedTCPPorts = [
+        config.services.vikunja.port
       ];
     };
   };
@@ -278,8 +281,19 @@
     httpd.nginx.forceSSL = true;
   };
 
-  services.emacs-antispam-bot = {
+  services.vikunja = {
     enable = true;
+    port = 3456;
+    database = {
+      type = "sqlite";
+      path = "/var/lib/vikunja/vikunja.db";
+    };
+    frontendScheme = "https";
+    frontendHostname = "todo.esavara.cr";
+  };
+
+  services.emacs-antispam-bot = {
+    enable = false;
     tokenFile = config.sops.templates."antispam".path;
   };
 
