@@ -268,7 +268,7 @@
 
   services.radicle = {
     enable = true;
-    privateKeyFile = config.sops.secrets."radicle/auth/privateKey".path;
+    privateKey = config.sops.secrets."radicle/auth/privateKey".path;
     publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFZQ3w70MJIqT+Eb4jnu6tGeeecTM0AnSKC+ylbPxtoA radicle";
     node.openFirewall = true;
     node.listenAddress = "0.0.0.0";
