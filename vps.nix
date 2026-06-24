@@ -322,7 +322,7 @@
         jwtttllong = 25920000;
         maxitemsperpage = 100;
         allowiconchanges = false;
-        timezone = "America/Costa_Rica";
+        timezone = "America/Costa Rica";
         defaultlanguage = "es-ES";
       };
     };
