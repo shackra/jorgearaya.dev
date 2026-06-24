@@ -313,6 +313,16 @@
     };
     frontendScheme = "https";
     frontendHostname = "todo.esavara.cr";
+    settings = {
+      service = {
+        enableemailreminders = false;
+        enableregistration = false;
+        maxavatarsize = 4096;
+        jwtttl = 2592000;
+        jwtttllong = 25920000;
+        maxitemsperpage = 100;
+      };
+    };
   };
 
   services.emacs-antispam-bot = {
