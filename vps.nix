@@ -319,9 +319,11 @@
         enableregistration = false;
         maxavatarsize = 4096;
         jwtttl = 2592000;
-        jwtttllong = 25920000;
+        jwtttllong = 7776000;
+	jwtttlshort = 172800;
         maxitemsperpage = 100;
         allowiconchanges = false;
+	enableuserdeletion = false;
         timezone = "America/Costa_Rica";
         defaultlanguage = "es-ES";
       };
